@@ -4,6 +4,7 @@ function Student(name, gender, age) {
   this.age = age;
   this.marks = [];
   this.subject = null;
+  this.excluded = false;
 }
 
 Student.prototype.setSubject = function (subjectName) {
@@ -11,14 +12,14 @@ Student.prototype.setSubject = function (subjectName) {
 };
 
 Student.prototype.addMarks = function (...marksToAdd) {
-  if (this.marks === undefined || this.excluded) {
+  if (this.excluded || !Array.isArray(this.marks)) {
     return;
   }
   this.marks.push(...marksToAdd);
 };
 
 Student.prototype.getAverage = function () {
-  if (!this.marks.length) {
+  if (!this.marks || this.marks.length === 0) {
     return 0;
   }
   const total = this.marks.reduce((acc, mark) => acc + mark, 0);
